@@ -9,7 +9,16 @@ import AlertsPanel from './components/AlertsPanel';
 import DeadlinesPanel from './components/DeadlinesPanel';
 import AddStudentForm from './components/AddStudentForm';
 import AddDeadlineForm from './components/AddDeadlineForm';
-import { generateCode, saveData, loadData, saveCurrentCode, loadCurrentCode, clearCurrentCode } from './utils/codeStorage';
+import { generateCode, saveData, loadData, saveCurrentCode, clearCurrentCode } from './utils/codeStorage';
+import { 
+  saveCurrentCodeToFirebase, 
+  loadCurrentCodeFromFirebase, 
+  loadStudentsFromFirebase, 
+  loadDeadlinesFromFirebase, 
+  saveStudentsToFirebase, 
+  saveDeadlinesToFirebase,
+  clearCurrentCodeFromFirebase
+} from './utils/firebaseDatabase';
 
 function App() {
   const [currentCode, setCurrentCode] = useState(null);
@@ -24,35 +33,84 @@ function App() {
 
   // Load saved dashboard code on mount
   useEffect(() => {
-    const savedDashboard = loadCurrentCode();
-    if (savedDashboard) {
-      setCurrentCode(savedDashboard.code);
-      setDashboardType(savedDashboard.type);
-    }
+    const loadSavedDashboard = async () => {
+      try {
+        // Try Firebase first
+        const savedDashboard = await loadCurrentCodeFromFirebase();
+        if (savedDashboard) {
+          setCurrentCode(savedDashboard.code);
+          setDashboardType(savedDashboard.type);
+        }
+      } catch (error) {
+        console.error('Error loading dashboard from Firebase:', error);
+      }
+    };
+    
+    loadSavedDashboard();
   }, []);
 
-  // Load data from localStorage when code changes
+  // Load data from Firebase when code changes
   useEffect(() => {
-    if (currentCode) {
-      const loadedStudents = loadData(currentCode, 'students', []);
-      const loadedDeadlines = loadData(currentCode, 'deadlines', []);
-      setStudents(loadedStudents);
-      setDeadlines(loadedDeadlines);
-    }
+    if (!currentCode) return;
+
+    const loadDataFromFirebase = async () => {
+      try {
+        const [loadedStudents, loadedDeadlines] = await Promise.all([
+          loadStudentsFromFirebase(currentCode),
+          loadDeadlinesFromFirebase(currentCode)
+        ]);
+        
+        setStudents(loadedStudents || []);
+        setDeadlines(loadedDeadlines || []);
+      } catch (error) {
+        console.error('Error loading data from Firebase:', error);
+        // Fallback to localStorage
+        const loadedStudents = loadData(currentCode, 'students', []);
+        const loadedDeadlines = loadData(currentCode, 'deadlines', []);
+        setStudents(loadedStudents);
+        setDeadlines(loadedDeadlines);
+      }
+    };
+
+    loadDataFromFirebase();
   }, [currentCode]);
 
-  // Save students to localStorage whenever they change
+  // Save students to Firebase whenever they change
   useEffect(() => {
-    if (currentCode) {
-      saveData(currentCode, 'students', students);
-    }
+    if (!currentCode) return;
+    
+    const saveStudents = async () => {
+      try {
+        await saveStudentsToFirebase(currentCode, students);
+      } catch (error) {
+        console.error('Error saving students to Firebase:', error);
+        // Fallback to localStorage
+        saveData(currentCode, 'students', students);
+      }
+    };
+
+    // Debounce the save to avoid too many writes
+    const timer = setTimeout(saveStudents, 500);
+    return () => clearTimeout(timer);
   }, [students, currentCode]);
 
-  // Save deadlines to localStorage whenever they change
+  // Save deadlines to Firebase whenever they change
   useEffect(() => {
-    if (currentCode) {
-      saveData(currentCode, 'deadlines', deadlines);
-    }
+    if (!currentCode) return;
+    
+    const saveDeadlines = async () => {
+      try {
+        await saveDeadlinesToFirebase(currentCode, deadlines);
+      } catch (error) {
+        console.error('Error saving deadlines to Firebase:', error);
+        // Fallback to localStorage
+        saveData(currentCode, 'deadlines', deadlines);
+      }
+    };
+
+    // Debounce the save to avoid too many writes
+    const timer = setTimeout(saveDeadlines, 500);
+    return () => clearTimeout(timer);
   }, [deadlines, currentCode]);
 
   const handleAccessCode = (codeOrMode) => {
@@ -68,15 +126,21 @@ function App() {
     setCurrentCode(code);
     setDashboardType(type);
     setSelectedStudentId(null);
+    
+    // Save to Firebase and localStorage
+    saveCurrentCodeToFirebase(code, type === 'creator');
     saveCurrentCode(code, type === 'creator');
   };
 
-  const handleLeaveDashboard = () => {
+  const handleLeaveDashboard = async () => {
     setCurrentCode(null);
     setDashboardType(null);
     setStudents([]);
     setDeadlines([]);
     setSelectedStudentId(null);
+    
+    // Clear from Firebase and localStorage
+    await clearCurrentCodeFromFirebase();
     clearCurrentCode();
   };
 
