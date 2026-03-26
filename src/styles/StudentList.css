@@ -1,0 +1,46 @@
+/* Student List Styles */
+.student-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.student-list h3 {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.student-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.student-cards::-webkit-scrollbar {
+  width: 6px;
+}
+
+.student-cards::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.student-cards::-webkit-scrollbar-thumb {
+  background: #0066cc;
+  border-radius: 10px;
+}
+
+.student-cards::-webkit-scrollbar-thumb:hover {
+  background: #0052a3;
+}
+
+.no-students {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+}

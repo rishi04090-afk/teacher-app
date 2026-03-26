@@ -1,0 +1,146 @@
+/* Access Code Screen Styles */
+.access-code-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.access-card {
+  background: white;
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #e8e8e8;
+}
+
+.access-card h1 {
+  font-size: 2.2em;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.access-card h2 {
+  font-size: 1.6em;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.welcome-content,
+.mode-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.access-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1em;
+  margin: 0;
+}
+
+.btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+.btn-primary:hover {
+  background: #0052a3;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: #f0f4ff;
+  color: #0066cc;
+  border: 2px solid #0066cc;
+}
+
+.btn-secondary:hover {
+  background: #e8ecff;
+  border-color: #0052a3;
+  color: #0052a3;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-text {
+  background: transparent;
+  color: #0066cc;
+  font-weight: 500;
+  margin-top: 5px;
+  padding: 10px 16px;
+}
+
+.btn-text:hover {
+  background: #f0f4ff;
+}
+
+.code-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.3em;
+  letter-spacing: 4px;
+  text-align: center;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.3s;
+  font-family: 'Courier New', monospace;
+  margin: 10px 0 20px 0;
+}
+
+.code-input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+@media (max-width: 600px) {
+  .access-card {
+    padding: 30px 20px;
+  }
+
+  .access-card h1 {
+    font-size: 1.8em;
+  }
+
+  .access-card h2 {
+    font-size: 1.3em;
+  }
+
+  .access-card p {
+    font-size: 0.95em;
+  }
+
+  .btn {
+    padding: 12px 20px;
+  }
+}
