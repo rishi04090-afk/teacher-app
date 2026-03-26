@@ -1,0 +1,252 @@
+/* Deadlines Panel Styles */
+.deadlines-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.deadlines-panel h2 {
+  font-size: 1.4em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.deadlines-section {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.deadlines-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.deadlines-section h3 {
+  font-size: 1em;
+  color: #0066cc;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.deadlines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no-deadlines {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+  font-size: 0.95em;
+}
+
+.deadline-item {
+  display: grid;
+  grid-template-columns: 130px 1fr 100px;
+  gap: 15px;
+  align-items: start;
+  padding: 14px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+  transition: all 0.3s ease;
+}
+
+.deadline-item:hover {
+  background: #f0f4ff;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.deadline-item.urgent {
+  border-left-color: #ff9800;
+  background: #fff8f0;
+}
+
+.deadline-item.overdue {
+  border-left-color: #f44336;
+  background: #ffebee;
+}
+
+.deadline-item.completed {
+  border-left-color: #4caf50;
+  background: #f1f8f6;
+  opacity: 0.8;
+}
+
+.deadline-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.days-left {
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #e3f2fd;
+  color: #1976d2;
+  text-align: center;
+}
+
+.days-left.urgent {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.days-left.overdue {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.completed-badge {
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #e8f5e9;
+  color: #388e3c;
+  text-align: center;
+}
+
+.deadline-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.95em;
+  color: #333;
+}
+
+.deadline-info p {
+  margin: 0;
+  font-size: 0.85em;
+  color: #666;
+  line-height: 1.4;
+}
+
+.priority-badge {
+  font-size: 0.65em;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-align: center;
+  height: fit-content;
+}
+
+.priority-badge.priority-high {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.priority-badge.priority-medium {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.priority-badge.priority-low {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.completed-deadlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Edit/Delete Styles for Deadlines */
+.deadline-item {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 15px;
+  align-items: start;
+  padding: 14px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+  transition: all 0.3s ease;
+}
+
+.deadline-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.deadline-action-btn {
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.deadline-action-btn.edit-btn {
+  color: #1976d2;
+}
+
+.deadline-action-btn.edit-btn:hover {
+  background: #e3f2fd;
+}
+
+.deadline-action-btn.delete-btn {
+  color: #c62828;
+}
+
+.deadline-action-btn.delete-btn:hover {
+  background: #ffebee;
+}
+
+.deadline-action-btn.save-btn {
+  color: #388e3c;
+}
+
+.deadline-action-btn.save-btn:hover {
+  background: #e8f5e9;
+}
+
+.deadline-action-btn.cancel-btn {
+  color: #c62828;
+}
+
+.deadline-action-btn.cancel-btn:hover {
+  background: #ffebee;
+}
+
+.edit-date-input,
+.edit-title-input,
+.edit-description-input {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #0066cc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95em;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+.edit-date-input {
+  max-width: 150px;
+}
+
+.edit-title-input {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.edit-description-input {
+  resize: vertical;
+  min-height: 60px;
+}
