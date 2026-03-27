@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# 📚 Co-Op Program Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time collaborative dashboard for teachers to manage student placements, deadlines, and notes with seamless cross-device synchronization.
 
-## Available Scripts
+## ✨ Features
 
-In the project directory, you can run:
+- ✅ **Real-time Sync** - Changes instantly sync across all devices (laptop, tablet, phone)
+- ✅ **Code-based Sharing** - Generate unique 6-character codes to share dashboards
+- ✅ **Student Management** - Add, edit, and delete student information and notes
+- ✅ **Deadline Tracking** - Set, track, and manage important dates
+- ✅ **Professional UI** - Clean, modern, enterprise-ready interface
+- ✅ **Offline Support** - Works without internet (syncs when connection restored)
+- ✅ **Cross-Platform** - Works on any browser (Chrome, Safari, Firefox, Edge)
 
-### `npm start`
+## 🚀 Quick Start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
+- Node.js v16+
+- npm or yarn
+- Firebase account (free tier: [firebase.google.com](https://firebase.google.com))
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Setup
 
-### `npm test`
+1. **Clone & Install**
+   ```bash
+   git clone <your-repo>
+   cd teacher-app
+   npm install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Configure Firebase**
+   - Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+   - Enable Realtime Database (Test Mode)
+   - Copy your Firebase config
 
-### `npm run build`
+3. **Create `.env.local`** (use `.env.example` as template)
+   ```
+   REACT_APP_FIREBASE_API_KEY=your_key_here
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   REACT_APP_FIREBASE_DATABASE_URL=https://your_project.firebaseio.com
+   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_app_id
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Start Development**
+   ```bash
+   npm start
+   ```
+   Opens `http://localhost:3000`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📱 Cross-Device Testing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Computer**: Create a dashboard → Get code (e.g., `ABC123`)
+2. **Tablet**: Join dashboard → Enter code → Instant sync!
+3. Add data anywhere → See it update everywhere in real-time
 
-### `npm run eject`
+## 🔐 Security Notes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Development**: Currently uses open Firebase rules for easy testing
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Production**: Implement Firebase Authentication and strict security rules (see `DEPLOYMENT_GUIDE.md`)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📦 Deployment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Deploy to Vercel (5 minutes)
 
-## Learn More
+1. Push to GitHub
+2. Import repo on [vercel.com](https://vercel.com)
+3. Add Firebase environment variables
+4. Deploy ✨
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+See `DEPLOYMENT_GUIDE.md` for detailed instructions.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📖 Documentation
 
-### Code Splitting
+- **Setup & Firebase**: See `DEPLOYMENT_GUIDE.md`
+- **Architecture**: Check `src/utils/firebaseDatabase.js`
+- **Components**: See `src/components/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🛠️ Tech Stack
 
-### Analyzing the Bundle Size
+- **Frontend**: React 19.2.4
+- **Backend**: Firebase Realtime Database
+- **Hosting**: Vercel
+- **Version Control**: GitHub
+- **Styling**: CSS Grid + Flexbox
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🐛 Troubleshooting
 
-### Making a Progressive Web App
+| Issue | Solution |
+|-------|----------|
+| Data not syncing | Check `.env.local` Firebase config + internet connection |
+| Can't see data on tablet | Ensure entering correct code, both on same Firebase project |
+| App runs offline | Expected! Works with localStorage fallback |
+| Build fails | Run `npm install`, check Node version v16+ |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📝 License
 
-### Advanced Configuration
+[Your License Here]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🤝 Contributing
 
-### Deployment
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes
+4. Push to branch
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Questions?** Check `DEPLOYMENT_GUIDE.md` or create a GitHub Issue.
