@@ -1,6 +1,13 @@
 import React from 'react';
 import '../styles/StudentCard.css';
 
+const ASSIGNMENTS = [
+  'CELP',
+  'Employer Summative Assessment',
+  'Career Fair',
+  'Employer Interview'
+];
+
 function StudentCard({ student, isSelected, onSelect, onDelete }) {
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -33,6 +40,14 @@ function StudentCard({ student, isSelected, onSelect, onDelete }) {
       <p className="employer-info">🏢 {student.employer}</p>
       <div className="card-dates">
         <small>📅 {student.startDate ? new Date(student.startDate).toLocaleDateString() : 'N/A'} - {student.endDate ? new Date(student.endDate).toLocaleDateString() : 'N/A'}</small>
+      </div>
+      {/* Hours Completed */}
+      <div style={{ fontSize: 13, margin: '4px 0' }}>
+        <strong>Hours:</strong> {student.hoursCompleted || 0}
+      </div>
+      {/* Assignments Summary */}
+      <div style={{ fontSize: 13, margin: '4px 0' }}>
+        <strong>Assignments:</strong> {student.assignmentsCompleted ? student.assignmentsCompleted.length : 0}/{ASSIGNMENTS.length}
       </div>
       <div className="card-footer">
         <span className={`priority-indicator priority-${student.priority}`}>

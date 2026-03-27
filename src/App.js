@@ -148,6 +148,9 @@ function App() {
     const newStudent = {
       id: Date.now(),
       ...studentData,
+      image: studentData.image || null,
+      hoursCompleted: studentData.hoursCompleted || '',
+      assignmentsCompleted: studentData.assignmentsCompleted || [],
       notes: [],
       documents: []
     };
@@ -214,6 +217,11 @@ function App() {
             <span className="dashboard-type">{isCreator ? 'Dashboard Creator' : 'Guest Access'}</span>
           </div>
           <div className="header-right">
+            <img 
+              src={process.env.PUBLIC_URL + '/yrdsb-logo.png'} 
+              alt="YRDSB Logo" 
+              className="header-logo"
+            />
             <button 
               className="exit-btn" 
               onClick={handleLeaveDashboard}

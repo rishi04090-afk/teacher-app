@@ -1,5 +1,14 @@
+
 import React, { useState } from 'react';
 import '../styles/AddStudentForm.css';
+
+// List of assignments (corrected spelling)
+const ASSIGNMENTS = [
+  'CELP',
+  'Employer Summative Assessment',
+  'Career Fair',
+  'Employer Interview'
+];
 
 function AddStudentForm({ onAddStudent }) {
   const [formData, setFormData] = useState({
@@ -13,17 +22,34 @@ function AddStudentForm({ onAddStudent }) {
     endDate: '',
     notes: '',
     status: 'Active',
-    priority: 'medium'
+    priority: 'medium',
+    image: null,
+    hoursCompleted: '',
+    assignmentsCompleted: []
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    const { name, value, type, files, checked } = e.target;
+    if (type === 'file') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: files[0] || null
+      }));
+    } else if (name === 'assignmentsCompleted') {
+      setFormData(prev => {
+        const updated = checked
+          ? [...prev.assignmentsCompleted, value]
+          : prev.assignmentsCompleted.filter(a => a !== value);
+        return { ...prev, assignmentsCompleted: updated };
+      });
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -35,7 +61,38 @@ function AddStudentForm({ onAddStudent }) {
       return;
     }
 
-    onAddStudent(formData);
+    // Prepare image as data URL if present
+    if (formData.image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onAddStudent({ ...formData, image: reader.result });
+        resetForm();
+      };
+      reader.readAsDataURL(formData.image);
+    } else {
+      onAddStudent(formData);
+      resetForm();
+    }
+
+    function resetForm() {
+      setFormData({
+        name: '',
+        placement: '',
+        employer: '',
+        email: '',
+        employerContact: '',
+        employerPhone: '',
+        startDate: '',
+        endDate: '',
+        notes: '',
+        status: 'Active',
+        priority: 'medium',
+        image: null,
+        hoursCompleted: '',
+        assignmentsCompleted: []
+      });
+      setIsExpanded(false);
+    }
     
     // Reset form
     setFormData({
@@ -191,6 +248,46 @@ function AddStudentForm({ onAddStudent }) {
                 placeholder="Add any important notes about this student..."
                 rows="3"
               />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Student Picture</label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Hours Completed</label>
+            <input
+              type="number"
+              name="hoursCompleted"
+              value={formData.hoursCompleted}
+              onChange={handleChange}
+              min="0"
+              placeholder="e.g., 40"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Assignments Completed</label>
+            <div className="assignments-list">
+              {ASSIGNMENTS.map((assignment) => (
+                <label key={assignment} style={{ display: 'block', marginBottom: 4 }}>
+                  <input
+                    type="checkbox"
+                    name="assignmentsCompleted"
+                    value={assignment}
+                    checked={formData.assignmentsCompleted.includes(assignment)}
+                    onChange={handleChange}
+                  />
+                  {assignment}
+                </label>
+              ))}
             </div>
           </div>
 
