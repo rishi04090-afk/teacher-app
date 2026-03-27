@@ -148,6 +148,9 @@ function App() {
     const newStudent = {
       id: Date.now(),
       ...studentData,
+      image: studentData.image || null,
+      hoursCompleted: studentData.hoursCompleted || '',
+      assignmentsCompleted: studentData.assignmentsCompleted || [],
       notes: [],
       documents: []
     };

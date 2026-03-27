@@ -162,28 +162,72 @@ body {
 @media (max-width: 1200px) {
   .dashboard-layout {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
-
   .students-section,
   .details-section {
     grid-column: 1 / -1;
   }
-
   .header h1 {
     font-size: 2em;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .students-section {
+    order: 1;
+    min-height: 180px;
+    max-height: 320px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+  }
+  .details-section {
+    order: 2;
+  }
   .header {
-    padding: 20px;
+    padding: 14px 8px;
+    flex-direction: column;
+    text-align: center;
   }
-
-  .header h1 {
-    font-size: 1.5em;
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
   }
-
   .container {
-    padding: 0 10px;
+    padding: 0 4px;
+  }
+  .section {
+    padding: 14px 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.1em;
+  }
+  .dashboard-type {
+    font-size: 0.8em;
+    padding: 2px 6px;
+  }
+  .section {
+    padding: 8px 2px;
+    font-size: 0.97em;
+  }
+  .students-section, .details-section, .deadlines-section, .alerts-section {
+    border-radius: 6px;
+    padding: 8px 2px;
+  }
+  .students-section {
+    min-height: 120px;
+    max-height: 220px;
+  }
+  .footer {
+    font-size: 0.8em;
+    padding: 10px;
   }
 }

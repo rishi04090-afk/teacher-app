@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/StudentDetail.css';
 
+const ASSIGNMENTS = [
+  'CELP',
+  'Employer Summative Assessment',
+  'Career Fair',
+  'Employer Interview'
+];
+
 function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
   const [newNote, setNewNote] = useState('');
   const [notes, setNotes] = useState([]);
@@ -90,6 +97,17 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
     return <div className="student-detail empty">Select a student to view details</div>;
   }
 
+  // Handler for toggling assignment completion for this student
+  const handleAssignmentToggle = (assignment) => {
+    let updatedAssignments = Array.isArray(student.assignmentsCompleted) ? [...student.assignmentsCompleted] : [];
+    if (updatedAssignments.includes(assignment)) {
+      updatedAssignments = updatedAssignments.filter(a => a !== assignment);
+    } else {
+      updatedAssignments.push(assignment);
+    }
+    onUpdateStudent(student.id, { ...student, assignmentsCompleted: updatedAssignments });
+  };
+
   return (
     <div className="student-detail">
       <div className="detail-header">
@@ -118,6 +136,40 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
             </>
           )}
         </div>
+      </div>
+
+      {/* Student Picture and Hours Completed */}
+      <div className="detail-section" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+        {student.image && (
+          <div style={{ minWidth: 100 }}>
+            <img
+              src={student.image}
+              alt="Student"
+              style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 8, border: '1px solid #ccc' }}
+            />
+          </div>
+        )}
+        <div>
+          <strong>Hours Completed:</strong> {student.hoursCompleted || 0}
+        </div>
+      </div>
+
+      {/* Assignments Checklist (editable) */}
+      <div className="detail-section">
+        <h3>Assignments</h3>
+        <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+          {ASSIGNMENTS.map((assignment) => (
+            <li key={assignment} style={{ marginBottom: 6 }}>
+              <input
+                type="checkbox"
+                checked={student.assignmentsCompleted && student.assignmentsCompleted.includes(assignment)}
+                onChange={() => handleAssignmentToggle(assignment)}
+                style={{ marginRight: 8 }}
+              />
+              {assignment}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="detail-section">
