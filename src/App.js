@@ -148,6 +148,7 @@ function App() {
     const newStudent = {
       id: Date.now(),
       ...studentData,
+      notes: [],
       documents: []
     };
     const updatedStudents = [...students, newStudent];
@@ -214,11 +215,11 @@ function App() {
           </div>
           <div className="header-right">
             <button 
-              className="leave-btn" 
+              className="exit-btn" 
               onClick={handleLeaveDashboard}
-              title="Leave dashboard"
+              title="Exit dashboard"
             >
-              🚪 Leave
+              Exit
             </button>
           </div>
         </div>
