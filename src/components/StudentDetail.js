@@ -9,13 +9,12 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
   const [isEditingStudent, setIsEditingStudent] = useState(false);
   const [editedStudent, setEditedStudent] = useState(null);
 
-  const authorName = isNewDashboard ? 'Previous Teacher' : 'New Teacher';
+  // Fix: isNewDashboard=false means creator (previous teacher), isNewDashboard=true means joiner (new teacher)
+  const authorName = isNewDashboard ? 'New Teacher' : 'Previous Teacher';
 
   useEffect(() => {
-    if (student && student.notes) {
-      setNotes([
-        { id: 1, text: student.notes, date: '2024-10-20', author: 'Previous Teacher' }
-      ]);
+    if (student && student.notes && Array.isArray(student.notes)) {
+      setNotes(student.notes);
     } else {
       setNotes([]);
     }
@@ -31,8 +30,11 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
         date: new Date().toISOString().split('T')[0],
         author: authorName
       };
-      setNotes([...notes, note]);
+      const updatedNotes = [...notes, note];
+      setNotes(updatedNotes);
       setNewNote('');
+      // Save to Firebase
+      onUpdateStudent(student.id, { ...student, notes: updatedNotes });
     }
   };
 
@@ -42,15 +44,21 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
   };
 
   const handleSaveEditNote = (noteId) => {
-    setNotes(notes.map(n => 
+    const updatedNotes = notes.map(n => 
       n.id === noteId ? { ...n, text: editingNoteText } : n
-    ));
+    );
+    setNotes(updatedNotes);
     setEditingNoteId(null);
     setEditingNoteText('');
+    // Save to Firebase
+    onUpdateStudent(student.id, { ...student, notes: updatedNotes });
   };
 
   const handleDeleteNote = (noteId) => {
-    setNotes(notes.filter(n => n.id !== noteId));
+    const updatedNotes = notes.filter(n => n.id !== noteId);
+    setNotes(updatedNotes);
+    // Save to Firebase
+    onUpdateStudent(student.id, { ...student, notes: updatedNotes });
   };
 
   const handleStartEditStudent = () => {

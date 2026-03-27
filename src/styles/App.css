@@ -24,10 +24,64 @@ body {
   margin-bottom: 30px;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .header h1 {
   font-size: 2.5em;
   margin-bottom: 5px;
   font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-type {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.exit-btn {
+  padding: 8px 14px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.exit-btn:hover {
+  background: #0052a3;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+}
+
+.exit-btn:active {
+  transform: translateY(0);
 }
 
 .header p {
@@ -55,10 +109,27 @@ body {
   padding: 25px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  border-top: 4px solid #667eea;
 }
 
 .section:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.alerts-section {
+  border-top-color: #f56565;
+}
+
+.deadlines-section {
+  border-top-color: #ed8936;
+}
+
+.students-section {
+  border-top-color: #48bb78;
+}
+
+.details-section {
+  border-top-color: #4299e1;
 }
 
 .alerts-section {
