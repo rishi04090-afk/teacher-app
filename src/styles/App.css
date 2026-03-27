@@ -56,10 +56,31 @@ body {
   width: fit-content;
 }
 
+
 .header-right {
   display: flex;
-  gap: 12px;
+  gap: 18px;
   align-items: center;
+}
+
+.header-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  margin-right: 8px;
+  background: transparent;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .header-logo {
+    height: 40px;
+    margin: 0 auto 8px auto;
+  }
+  .header-right {
+    gap: 10px;
+    justify-content: center;
+  }
 }
 
 .exit-btn {
