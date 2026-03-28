@@ -3,6 +3,7 @@ import './styles/App.css';
 import AccessCodeScreen from './components/AccessCodeScreen';
 import CodeDisplay from './components/CodeDisplay';
 import SearchBar from './components/SearchBar';
+import DashboardStats from './components/DashboardStats';
 import StudentList from './components/StudentList';
 import StudentDetail from './components/StudentDetail';
 import AlertsPanel from './components/AlertsPanel';
@@ -27,9 +28,11 @@ function App() {
   const [deadlines, setDeadlines] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedForm, setSelectedForm] = useState('All');
   const [selectedStudentId, setSelectedStudentId] = useState(null);
 
-  const categories = ['All', 'Students', 'Forms', 'Notes'];
+  const categories = ['All', 'Students', 'Completed', 'In Progress', 'Forms', 'Hours'];
+  const forms = ['All', 'CELP', 'Employer Summative Assessment', 'Career Fair', 'Employer Interview'];
 
   // Load saved dashboard code on mount
   useEffect(() => {
@@ -192,7 +195,65 @@ function App() {
 
   const selectedStudent = students.find(s => s.id === selectedStudentId);
 
-  const alerts = students
+  // Filter students based on selected category
+  const getFilteredStudents = () => {
+    let filtered = students;
+
+    // Apply category filter
+    if (selectedCategory === 'Hours') {
+      filtered = students.filter(s => s.hoursCompleted && s.hoursCompleted !== '');
+    } else if (selectedCategory === 'Forms') {
+      filtered = students.filter(s => {
+        if (selectedForm === 'All') {
+          return s.assignmentsCompleted && s.assignmentsCompleted.length > 0;
+        } else {
+          return s.assignmentsCompleted && s.assignmentsCompleted.includes(selectedForm);
+        }
+      });
+    } else if (selectedCategory === 'Completed') {
+      filtered = students.filter(s => {
+        const completedCount = s.assignmentsCompleted ? s.assignmentsCompleted.length : 0;
+        return completedCount === 4; // All 4 forms completed
+      });
+    } else if (selectedCategory === 'In Progress') {
+      filtered = students.filter(s => {
+        const completedCount = s.assignmentsCompleted ? s.assignmentsCompleted.length : 0;
+        return completedCount > 0 && completedCount < 4; // Some forms completed but not all
+      });
+    }
+    // 'All' and 'Students' show all students
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(s =>
+        s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (s.employer && s.employer.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (s.contact && s.contact.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    // Apply sorting based on category
+    if (selectedCategory === 'Students') {
+      // Sort A to Z by name
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (selectedCategory === 'Hours') {
+      // Sort by hours completed (most to least)
+      filtered.sort((a, b) => {
+        const hoursA = parseFloat(a.hoursCompleted) || 0;
+        const hoursB = parseFloat(b.hoursCompleted) || 0;
+        return hoursB - hoursA;
+      });
+    } else if (selectedCategory === 'Completed' || selectedCategory === 'In Progress') {
+      // Sort A to Z by name for completion categories
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return filtered;
+  };
+
+  const filteredStudents = getFilteredStudents();
+
+  const alerts = filteredStudents
     .filter(s => s.priority === 'high' && s.status === 'Active')
     .map((s, idx) => ({
       id: idx,
@@ -242,7 +303,12 @@ function App() {
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
+          forms={forms}
+          selectedForm={selectedForm}
+          onFormChange={setSelectedForm}
         />
+
+        <DashboardStats students={filteredStudents} deadlines={deadlines} />
 
         <div className="dashboard-layout">
           {/* Alerts Section */}
@@ -264,7 +330,7 @@ function App() {
           <section className="section students-section">
             <AddStudentForm onAddStudent={handleAddStudent} />
             <StudentList
-              students={students}
+              students={filteredStudents}
               selectedStudentId={selectedStudentId}
               onSelectStudent={setSelectedStudentId}
               onDeleteStudent={handleDeleteStudent}

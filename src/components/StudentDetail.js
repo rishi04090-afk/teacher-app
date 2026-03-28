@@ -150,7 +150,22 @@ function StudentDetail({ student, isNewDashboard, onUpdateStudent }) {
           </div>
         )}
         <div>
-          <strong>Hours Completed:</strong> {student.hoursCompleted || 0}
+          {isEditingStudent ? (
+            <div style={{ marginTop: 8 }}>
+              <label style={{ fontWeight: 'bold', marginRight: 8 }}>Hours Completed:</label>
+              <input
+                type="number"
+                value={editedStudent?.hoursCompleted || 0}
+                onChange={(e) => handleFieldChange('hoursCompleted', e.target.value)}
+                className="edit-input"
+                style={{ width: 100 }}
+              />
+            </div>
+          ) : (
+            <div>
+              <strong>Hours Completed:</strong> {student.hoursCompleted || 0}
+            </div>
+          )}
         </div>
       </div>
 
