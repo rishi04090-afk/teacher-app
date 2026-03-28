@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f0f4f8;
   color: #333;
 }
 
@@ -20,7 +20,7 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 30px 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
 }
 
@@ -43,19 +43,21 @@ body {
   margin-bottom: 5px;
   font-weight: 700;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .dashboard-type {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   color: white;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 6px;
   font-size: 0.85em;
   font-weight: 600;
   width: fit-content;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 
 .header-right {
   display: flex;
@@ -70,6 +72,7 @@ body {
   margin-right: 8px;
   background: transparent;
   display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 @media (max-width: 900px) {
@@ -84,21 +87,23 @@ body {
 }
 
 .exit-btn {
-  padding: 8px 14px;
-  background: #0066cc;
-  color: white;
+  padding: 10px 18px;
+  background: #ffffff;
+  color: #667eea;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.85em;
-  transition: all 0.2s ease;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .exit-btn:hover {
-  background: #0052a3;
-  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background: #f5f5f5;
 }
 
 .exit-btn:active {
@@ -128,13 +133,22 @@ body {
   background: white;
   border-radius: 12px;
   padding: 25px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   border-top: 4px solid #667eea;
 }
 
 .section:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.section h2,
+.section h3 {
+  color: #333;
+  margin-bottom: 12px;
+  font-size: 1.3em;
+  font-weight: 600;
 }
 
 .alerts-section {
@@ -148,6 +162,7 @@ body {
 .students-section {
   border-top-color: #48bb78;
 }
+
 
 .details-section {
   border-top-color: #4299e1;

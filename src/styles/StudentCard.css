@@ -1,57 +1,78 @@
 /* Student Card Styles */
 .student-card {
-  padding: 15px 18px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  padding: 16px 18px;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
   background: white;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border-left: 4px solid #0066cc;
+  transition: all 0.3s ease;
+  border-left: 5px solid #667eea;
+  position: relative;
+  overflow: hidden;
+}
+
+.student-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+  pointer-events: none;
 }
 
 .student-card:hover {
-  border-color: #0066cc;
-  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.12);
-  transform: translateX(2px);
+  border-color: #667eea;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15);
+  transform: translateX(4px);
 }
 
 .student-card.selected {
-  border-color: #0066cc;
-  background: #f0f4ff;
-  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.15);
-  border-left-width: 4px;
+  border-color: #667eea;
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f4ff 100%);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+  border-left-width: 5px;
 }
 
 .student-card.completed {
-  border-left-color: #4caf50;
+  border-left-color: #48bb78;
+}
+
+.student-card.completed:hover {
+  border-color: #48bb78;
+  box-shadow: 0 6px 16px rgba(72, 187, 120, 0.15);
 }
 
 .student-card.active {
-  border-left-color: #0066cc;
+  border-left-color: #667eea;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .card-header h4 {
-  font-size: 1em;
+  font-size: 1.05em;
   margin: 0;
   color: #333;
+  font-weight: 600;
 }
 
 .card-header-controls {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
 }
 
 .status-badge {
   font-size: 0.75em;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 12px;
   font-weight: 600;
 }
@@ -68,28 +89,35 @@
 
 .placement-info,
 .employer-info {
-  font-size: 0.85em;
+  font-size: 0.88em;
   color: #666;
-  margin: 4px 0;
+  margin: 5px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .card-dates {
   margin: 8px 0;
   font-size: 0.8em;
   color: #999;
+  position: relative;
+  z-index: 1;
 }
 
 .card-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .priority-indicator {
-  font-size: 0.65em;
-  padding: 3px 8px;
+  font-size: 0.7em;
+  padding: 4px 10px;
   border-radius: 4px;
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .priority-indicator.priority-high {
@@ -112,10 +140,11 @@
   background: #ffebee;
   color: #c62828;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 0.85em;
+  font-size: 0.9em;
   transition: all 0.2s;
+  font-weight: 600;
 }
 
 .card-delete-btn:hover {

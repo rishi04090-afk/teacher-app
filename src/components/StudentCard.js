@@ -45,9 +45,23 @@ function StudentCard({ student, isSelected, onSelect, onDelete }) {
       <div style={{ fontSize: 13, margin: '4px 0' }}>
         <strong>Hours:</strong> {student.hoursCompleted || 0}
       </div>
-      {/* Assignments Summary */}
-      <div style={{ fontSize: 13, margin: '4px 0' }}>
-        <strong>Assignments:</strong> {student.assignmentsCompleted ? student.assignmentsCompleted.length : 0}/{ASSIGNMENTS.length}
+      
+      {/* Assignments Summary with Progress */}
+      <div style={{ fontSize: 13, margin: '10px 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+          <strong>Assignments:</strong>
+          <span>{student.assignmentsCompleted ? student.assignmentsCompleted.length : 0}/{ASSIGNMENTS.length}</span>
+        </div>
+        <div style={{ background: '#e0e0e0', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
+          <div
+            style={{
+              background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+              height: '100%',
+              width: `${((student.assignmentsCompleted ? student.assignmentsCompleted.length : 0) / ASSIGNMENTS.length) * 100}%`,
+              transition: 'width 0.3s ease'
+            }}
+          ></div>
+        </div>
       </div>
       <div className="card-footer">
         <span className={`priority-indicator priority-${student.priority}`}>
